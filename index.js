@@ -160,6 +160,7 @@ app.post('/api/users', checkUsernameInput, (req, res) => {
     username: req.body.username
   })
   console.log(newUser)
+  // @ts-ignore
   newUser.saveUser()
     .then(user => {
       console.log(`User ${user.username} saved successfully!`.bgGreen.black)
@@ -190,6 +191,7 @@ app.post('/api/users/:_id/exercises', dateCheck, async (req, res) => {
         // @ts-ignore
         user.log[nextLogNum].date = req.body.date
       }
+      // @ts-ignore
       user?.saveUser()
         .then(savedUser => {
           const log = savedUser.log[nextLogNum]
