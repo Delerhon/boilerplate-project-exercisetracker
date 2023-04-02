@@ -31,6 +31,21 @@ const userSchema = new mongoose.Schema({
       return user.save()
     }
   }
+}/*,
+  // @ts-ignore
+  {
+    virtuals: {
+      countLogs: {
+        get () {
+          return this.log.length
+        }
+      }
+    }
+} */
+)
+
+userSchema.virtual('countLogs').get(function () {
+  return this.log.length
 })
 
 userSchema.statics.getAllAsArray = async function () {
