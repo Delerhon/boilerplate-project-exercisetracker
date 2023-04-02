@@ -52,6 +52,22 @@ const dateCheck = (req, res, next) => {
   }
 }
 
+/**
+ * @param {Date} date
+ */
+function postDateFormat (date) {
+  const local = 'en-GB'
+  let formatedDate = ''
+  let day = date.toLocaleString(local, { day: 'numeric' }).toString()
+  if (day.length === 1) { day = '0' + day }
+  const dayNameShort = date.toLocaleString(local, { weekday: 'short' })
+  const month = date.toLocaleString(local, { month: 'short' })
+  const year = date.toLocaleString(local, { year: 'numeric' })
+
+  formatedDate = formatedDate.concat(dayNameShort, ' ', month, ' ', day, ' ', year) // Mon Jan 01 1990
+  return formatedDate
+}
+
 /// ///////////////////////////////////////////////////// Import Schema
 const User = require('./MongoSchema/user.model.js')
 // @ts-ignore
@@ -126,21 +142,6 @@ app.post('/api/users', checkUsernameInput, (req, res) => {
     })
 })
 
-/**
- * @param {Date} date
- */
-function postDateFormat (date) {
-  const local = 'en-GB'
-  let formatedDate = ''
-  let day = date.toLocaleString(local, { day: 'numeric' }).toString()
-  if (day.length === 1) { day = '0' + day }
-  const dayNameShort = date.toLocaleString(local, { weekday: 'short' })
-  const month = date.toLocaleString(local, { month: 'short' })
-  const year = date.toLocaleString(local, { year: 'numeric' })
-
-  formatedDate = formatedDate.concat(dayNameShort, ' ', month, ' ', day, ' ', year) // Mon Jan 01 1990
-  return formatedDate
-}
 app.post('/api/users/:_id/exercises', dateCheck, async (req, res) => {
   await User.findById(req.params._id).exec()
     .then(user => {
