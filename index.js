@@ -117,7 +117,8 @@ app.get('/api/users/:_id/logs', async (req, res, next) => {
     .then(user => {
       const response = {
         username: user?.username,
-        // count: ,
+        // @ts-ignore
+        count: user?.countLogs,
         _id: user?._id,
         log: [{}]
       }
