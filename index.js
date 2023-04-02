@@ -112,13 +112,46 @@ app.get('/api/users', (req, res) => {
     .catch((/** @type {any} */ err) => { console.log(err) })
 })
 
-// für nächsten GET benötigt
-/* const savedUserLog = savedUser.log.map(obj => {
-  return {
-    description: obj.description,
-    duration: obj.duration,
-    date: postDateFormat(obj.date)
-  } */
+app.get('/api/users/:_id/logs', async (req, res, next) => {
+  await User.findById(req.params._id).exec()
+    .then(user => {
+      const response = {
+        username: user?.username,
+        // count: ,
+        _id: user?._id,
+        log: [{}]
+      }
+
+      // @ts-ignore
+      response.log = user.log.map(log => {
+        return {
+          description: log.description,
+          duration: log.duration,
+          date: postDateFormat(log.date)
+        }
+      })
+
+      res.send(response)
+    })
+    .catch(error => {
+      console.log(error)
+      res.send('Incorrect Parameters')
+    })
+  res.send()
+})
+
+/*
+          {
+          username: "fcc_test",
+          count: 1,
+          _id: "5fb5853f734231456ccb3b05",
+          log: [{
+            description: "test",
+            duration: 60,
+            date: "Mon Jan 01 1990",
+          }]
+        }
+  */
 
 /// //////////////////////////////////////////////////// POST
 
