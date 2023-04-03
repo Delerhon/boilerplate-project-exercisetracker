@@ -14,7 +14,7 @@ const path = require('path')
 const router = require('express').Router()
 // eslint-disable-next-line no-unused-vars
 const color = require('colors')
-const uri = process.env.MDBSRV || ''
+const uri = process.env.MDBSRV  || process.env['MDBSRV'] || ''
 
 const mainView = path.join(__dirname, '/views/index.html')
 
