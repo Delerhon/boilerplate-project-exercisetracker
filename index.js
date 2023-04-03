@@ -157,17 +157,18 @@ runMongoDB()
 
 /// ///////////////////////////////////////////////////// Middleware
 
-app.use('/', router)
+
 app.use(cors())
 app.use(express.static('public'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: false }))
 // @ts-ignore
 // @ts-ignore
 app.use((req, res, next) => {
   console.log(`${req.method} request received for URL: ${req.url}`)
   next()
 })
+app.use('/', router)
 
 /// //////////////////////////////////////////////////// GET
 
