@@ -112,12 +112,12 @@ function postDateFormat (date) {
 const checkIncomingQuery = (req, res, next) => {
   // Werte zuweisen wenn diese nicht angefragt werden
   if (!req.query.from) {
-    req.query.from = '0000-00-00'
+    req.query.from = '0001-01-01'
   }
   if (!req.query.to) {
-    req.query.to = '9999-99-99'
+    req.query.to = '9999-12-31'
   }
-  if (req.query.to === '9999-99-99' && req.query.from === '0000-00-00') {
+  if (req.query.to === '9999-12-31' && req.query.from === '0001-01-01') {
     next() // Wenn beide leer waren, dann gehts hier raus
   } else {
     let error = false
