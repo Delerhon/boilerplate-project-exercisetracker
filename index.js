@@ -157,6 +157,7 @@ runMongoDB()
 
 /// ///////////////////////////////////////////////////// Middleware
 
+app.use('/', router)
 app.use(cors())
 app.use(express.static('public'))
 app.use(bodyParser.json())
@@ -172,13 +173,13 @@ app.use((req, res, next) => {
 
 // @ts-ignore
 // @ts-ignore
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
   res.sendFile(mainView)
 })
 
 // @ts-ignore
 // @ts-ignore
-app.get('/api/users', (req, res) => {
+router.get('/api/users', (req, res) => {
   // @ts-ignore
   User.getAllAsArray()
     .then((/** @type {Array} */ list) => {
@@ -190,7 +191,7 @@ app.get('/api/users', (req, res) => {
     })
 })
 
-app.get(
+router.get(
   '/api/users/:_id/logs',
   checkIncomingQuery,
   limitCheck,
@@ -267,7 +268,7 @@ app.get(
 
 /// //////////////////////////////////////////////////// POST
 
-app.post('/api/users', checkUsernameInput, (req, res) => {
+router.post('/api/users', checkUsernameInput, (req, res) => {
   const newUser = new User({
     username: req.body.username
   })
@@ -290,7 +291,7 @@ app.post('/api/users', checkUsernameInput, (req, res) => {
     })
 })
 
-app.post('/api/users/:_id/exercises', dateCheck, async (req, res) => {
+router.post('/api/users/:_id/exercises', dateCheck, async (req, res) => {
   await User.findById(req.params._id)
     .exec()
     .then((user) => {
